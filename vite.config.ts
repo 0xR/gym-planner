@@ -9,7 +9,11 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg"],
+      pwaAssets: {
+        preset: "minimal-2023",
+        image: "public/favicon.svg",
+        overrideManifestIcons: true,
+      },
       manifest: {
         name: "Gym Planner",
         short_name: "Gym",
@@ -18,24 +22,6 @@ export default defineConfig({
         background_color: "#1a1a2e",
         display: "fullscreen",
         orientation: "portrait",
-        icons: [
-          {
-            src: "pwa-192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "pwa-512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-          {
-            src: "pwa-512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
-          },
-        ],
       },
     }),
   ],

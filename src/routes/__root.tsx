@@ -5,9 +5,10 @@ function ErrorFallback({
   error,
   resetErrorBoundary,
 }: {
-  error: Error;
+  error: unknown;
   resetErrorBoundary: () => void;
 }) {
+  const message = error instanceof Error ? error.message : String(error);
   return (
     <div
       style={{
@@ -22,7 +23,7 @@ function ErrorFallback({
       }}
     >
       <p>Something went wrong</p>
-      <pre style={{ fontSize: "0.8rem", opacity: 0.6 }}>{error.message}</pre>
+      <pre style={{ fontSize: "0.8rem", opacity: 0.6 }}>{message}</pre>
       <button onClick={resetErrorBoundary}>Try again</button>
     </div>
   );
