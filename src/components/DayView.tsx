@@ -1,9 +1,9 @@
-import { Suspense, use, useRef, useState, useTransition } from "react";
+import { Suspense, use, useRef, useState } from "react";
 import { MUSCLE_GROUPS, type MuscleGroup } from "../lib/types";
 import { getConflicts } from "../lib/conflicts";
 import { toggleMuscleGroup } from "../lib/db";
 import { today, addDays, dayLabel } from "../lib/dates";
-import { fetchDayData, invalidateAll } from "../lib/dayData";
+import { fetchDayData, optimisticToggle } from "../lib/dayData";
 import "./DayView.css";
 
 const DISPLAY_LABELS: Record<MuscleGroup, string> = {
@@ -22,19 +22,16 @@ const MAX_DAYS_BACK = 7;
 export function DayView() {
   const [offset, setOffset] = useState(0);
   const [, setVersion] = useState(0);
-  const [, startTransition] = useTransition();
   const touchStartX = useRef(0);
   const touchDeltaX = useRef(0);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const currentDate = addDays(today(), -offset);
 
-  const handleToggle = async (group: MuscleGroup) => {
-    await toggleMuscleGroup(currentDate, group);
-    invalidateAll();
-    startTransition(() => {
-      setVersion((v) => v + 1);
-    });
+  const handleToggle = (group: MuscleGroup) => {
+    optimisticToggle(currentDate, group);
+    setVersion((v) => v + 1);
+    toggleMuscleGroup(currentDate, group);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -94,7 +91,7 @@ export function DayView() {
         </button>
       </header>
 
-      <Suspense fallback={null}>
+      <Suspense fallback={<MuscleGridSkeleton />}>
         <MuscleGrid
           date={currentDate}
           gridRef={gridRef}
@@ -158,6 +155,18 @@ function MuscleGrid({ date, gridRef, onToggle }: MuscleGridProps) {
           </button>
         );
       })}
+    </div>
+  );
+}
+
+function MuscleGridSkeleton() {
+  return (
+    <div className="muscle-grid">
+      {MUSCLE_GROUPS.map((group) => (
+        <button key={group} className="muscle-btn" disabled>
+          <span className="muscle-btn__name">{DISPLAY_LABELS[group]}</span>
+        </button>
+      ))}
     </div>
   );
 }

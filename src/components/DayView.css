@@ -97,8 +97,13 @@
   min-height: 5.5rem;
 }
 
-.muscle-btn:active {
+.muscle-btn:active:not(:disabled) {
   transform: scale(0.97);
+}
+
+.muscle-btn:disabled {
+  cursor: default;
+  opacity: 0.4;
 }
 
 .muscle-btn__name {
