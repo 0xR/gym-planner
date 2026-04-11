@@ -1,0 +1,161 @@
+.day-view {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: 1rem;
+  padding-top: env(safe-area-inset-top, 1rem);
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  overflow: hidden;
+}
+
+/* Header */
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0 1.5rem;
+  gap: 1rem;
+}
+
+.nav-arrow {
+  appearance: none;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 2rem;
+  line-height: 1;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.15s, background-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-arrow:active {
+  background: var(--color-surface-hover);
+}
+
+.nav-arrow:disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.day-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.day-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.day-date {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Muscle grid */
+.muscle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  flex: 1;
+  align-content: start;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* Muscle button */
+.muscle-btn {
+  appearance: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 5.5rem;
+}
+
+.muscle-btn:active {
+  transform: scale(0.97);
+}
+
+.muscle-btn__name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color 0.15s;
+}
+
+.muscle-btn__badge {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+
+/* Selected state */
+.muscle-btn--selected {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.muscle-btn--selected .muscle-btn__name {
+  color: var(--color-accent-text);
+  font-weight: 600;
+}
+
+.muscle-btn--selected .muscle-btn__badge {
+  color: var(--color-accent-text-dim);
+}
+
+/* Selected but conflicted (warning) */
+.muscle-btn--selected-warn {
+  background: var(--color-warn);
+  border-color: var(--color-warn);
+}
+
+.muscle-btn--selected-warn .muscle-btn__name {
+  color: var(--color-warn-text);
+  font-weight: 600;
+}
+
+.muscle-btn--selected-warn .muscle-btn__badge {
+  color: var(--color-warn-text-dim);
+}
+
+/* Conflicted (not selected) */
+.muscle-btn--conflicted {
+  border-color: var(--color-warn-border);
+  opacity: 0.55;
+}
+
+.muscle-btn--conflicted .muscle-btn__name {
+  color: var(--color-warn-muted);
+}
+
+.muscle-btn--conflicted .muscle-btn__badge {
+  color: var(--color-warn-muted);
+}
