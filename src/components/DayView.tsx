@@ -54,9 +54,9 @@ export function DayView() {
       gridRef.current.style.transition = "";
     }
     const threshold = 60;
-    if (touchDeltaX.current < -threshold && offset < MAX_DAYS_BACK) {
+    if (touchDeltaX.current > threshold && offset < MAX_DAYS_BACK) {
       setOffset((o) => o + 1);
-    } else if (touchDeltaX.current > threshold && offset > 0) {
+    } else if (touchDeltaX.current < -threshold && offset > 0) {
       setOffset((o) => o - 1);
     }
   };
