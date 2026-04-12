@@ -1,11 +1,11 @@
 :root {
-  --color-bg: oklch(0.16 0.01 250);
-  --color-surface: oklch(0.22 0.01 250);
-  --color-surface-hover: oklch(0.26 0.01 250);
-  --color-border: oklch(0.28 0.01 250);
-  --color-text: oklch(0.92 0.01 250);
-  --color-text-secondary: oklch(0.75 0.01 250);
-  --color-text-tertiary: oklch(0.50 0.01 250);
+  --color-bg: oklch(0.13 0.005 250);
+  --color-surface: oklch(0.25 0.015 250);
+  --color-surface-hover: oklch(0.31 0.015 250);
+  --color-border: oklch(0.35 0.02 250);
+  --color-text: oklch(0.93 0.01 250);
+  --color-text-secondary: oklch(0.80 0.01 250);
+  --color-text-tertiary: oklch(0.56 0.01 250);
 
   /* Accent: warm amber/sand */
   --color-accent: oklch(0.72 0.12 70);
@@ -16,8 +16,8 @@
   --color-warn: oklch(0.52 0.14 25);
   --color-warn-text: oklch(0.95 0.03 25);
   --color-warn-text-dim: oklch(0.75 0.06 25);
-  --color-warn-border: oklch(0.40 0.10 25);
-  --color-warn-muted: oklch(0.55 0.10 25);
+  --color-warn-border: oklch(0.44 0.12 25);
+  --color-warn-muted: oklch(0.62 0.12 25);
 }
 
 *,

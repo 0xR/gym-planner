@@ -39,7 +39,7 @@
 }
 
 .nav-arrow:disabled {
-  opacity: 0.2;
+  opacity: 0.3;
   pointer-events: none;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .muscle-grid--rest {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* Muscle button */
@@ -192,7 +192,7 @@
 /* Conflicted (not selected) */
 .muscle-btn--conflicted {
   border-color: var(--color-warn-border);
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 .muscle-btn--conflicted .muscle-btn__name {
