@@ -203,6 +203,13 @@
   color: var(--color-warn-muted);
 }
 
+/* Fullscreen PWA: status bar is hidden, reduce top inset */
+@media (display-mode: fullscreen) {
+  .day-view {
+    padding-top: 0.5rem;
+  }
+}
+
 /* Rest day button */
 .rest-day-btn {
   appearance: none;
