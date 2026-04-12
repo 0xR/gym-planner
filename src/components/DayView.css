@@ -3,8 +3,8 @@
   flex-direction: column;
   height: 100dvh;
   padding: 1rem;
-  padding-top: max(1rem, env(safe-area-inset-top));
-  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-top: max(0.5rem, env(safe-area-inset-top));
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   user-select: none;
   -webkit-user-select: none;
   touch-action: pan-y;
@@ -50,11 +50,35 @@
   gap: 0.15rem;
 }
 
+.day-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .day-name {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-text);
   letter-spacing: -0.01em;
+}
+
+.today-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  padding: 0.35rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s;
+}
+
+.today-btn:active {
+  background: var(--color-surface-hover);
 }
 
 .day-date {
@@ -63,16 +87,30 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Muscle grid */
-.muscle-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(4, 1fr);
+/* Grid container (swipe target) */
+.grid-container {
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
   flex: 1;
   min-height: 0;
   transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+}
+
+/* Muscle grid */
+.muscle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+  transition: opacity 0.15s;
+}
+
+.muscle-grid--rest {
+  opacity: 0.5;
 }
 
 /* Muscle button */
@@ -163,4 +201,46 @@
 
 .muscle-btn--conflicted .muscle-btn__badge {
   color: var(--color-warn-muted);
+}
+
+/* Rest day button */
+.rest-day-btn {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px dashed var(--color-border);
+  border-radius: 12px;
+  margin-top: 0.25rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    border-style 0.15s,
+    color 0.15s,
+    transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.rest-day-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.rest-day-btn:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.rest-day-btn--selected {
+  background: var(--color-accent);
+  border-style: solid;
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+  font-weight: 600;
 }

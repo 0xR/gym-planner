@@ -9,6 +9,7 @@ const CONFLICT_PAIRS: [MuscleGroup, MuscleGroup, ConflictWeight][] = [
   ["chest", "triceps", 1],
   ["back", "biceps", 1],
   ["shoulders", "triceps", 1],
+  ["shoulders", "traps", 1],
 ];
 
 interface ConflictInfo {
@@ -37,6 +38,7 @@ export function getConflicts(
 
   for (const entry of recentEntries) {
     if (entry.date === currentDate) continue;
+    if (entry.restDay) continue;
     const entryDate = new Date(entry.date + "T00:00:00");
     const daysAgo = Math.round(
       (today.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24),

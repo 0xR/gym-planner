@@ -1,9 +1,13 @@
 import { Suspense, use, useRef, useState } from "react";
 import { MUSCLE_GROUPS, type MuscleGroup } from "../lib/types";
 import { getConflicts } from "../lib/conflicts";
-import { toggleMuscleGroup } from "../lib/db";
+import { toggleMuscleGroup, toggleRestDay } from "../lib/db";
 import { today, addDays, dayLabel } from "../lib/dates";
-import { fetchDayData, optimisticToggle } from "../lib/dayData";
+import {
+  fetchDayData,
+  optimisticToggle,
+  optimisticToggleRestDay,
+} from "../lib/dayData";
 import "./DayView.css";
 
 const DISPLAY_LABELS: Record<MuscleGroup, string> = {
@@ -15,16 +19,19 @@ const DISPLAY_LABELS: Record<MuscleGroup, string> = {
   legs: "Legs",
   calves: "Calves",
   abs: "Abs",
+  traps: "Traps",
+  forearms: "Forearms",
 };
 
 const MAX_DAYS_BACK = 7;
+const MAX_DAYS_FORWARD = 7;
 
 export function DayView() {
   const [offset, setOffset] = useState(0);
   const [, setVersion] = useState(0);
   const touchStartX = useRef(0);
   const touchDeltaX = useRef(0);
-  const gridRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const currentDate = addDays(today(), -offset);
 
@@ -34,6 +41,12 @@ export function DayView() {
     toggleMuscleGroup(currentDate, group);
   };
 
+  const handleToggleRestDay = () => {
+    optimisticToggleRestDay(currentDate);
+    setVersion((v) => v + 1);
+    toggleRestDay(currentDate);
+  };
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchDeltaX.current = 0;
@@ -41,22 +54,25 @@ export function DayView() {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
-    if (gridRef.current) {
+    if (containerRef.current) {
       const clamped = Math.max(-80, Math.min(80, touchDeltaX.current));
-      gridRef.current.style.transform = `translateX(${clamped}px)`;
-      gridRef.current.style.transition = "none";
+      containerRef.current.style.transform = `translateX(${clamped}px)`;
+      containerRef.current.style.transition = "none";
     }
   };
 
   const handleTouchEnd = () => {
-    if (gridRef.current) {
-      gridRef.current.style.transform = "";
-      gridRef.current.style.transition = "";
+    if (containerRef.current) {
+      containerRef.current.style.transform = "";
+      containerRef.current.style.transition = "";
     }
     const threshold = 60;
     if (touchDeltaX.current > threshold && offset < MAX_DAYS_BACK) {
       setOffset((o) => o + 1);
-    } else if (touchDeltaX.current < -threshold && offset > 0) {
+    } else if (
+      touchDeltaX.current < -threshold &&
+      offset > -MAX_DAYS_FORWARD
+    ) {
       setOffset((o) => o - 1);
     }
   };
@@ -78,24 +94,54 @@ export function DayView() {
           &lsaquo;
         </button>
         <div className="day-label">
-          <span className="day-name">{dayLabel(currentDate)}</span>
-          {offset > 0 && <span className="day-date">{currentDate}</span>}
+          <div className="day-name-row">
+            <span className="day-name">{dayLabel(currentDate)}</span>
+            {offset !== 0 && (
+              <button
+                className="today-btn"
+                onClick={() => setOffset(0)}
+                aria-label="Go to today"
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <circle cx="10" cy="10" r="7" />
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="2.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
+          {offset !== 0 && <span className="day-date">{currentDate}</span>}
         </div>
         <button
           className="nav-arrow"
-          onClick={() => setOffset((o) => Math.max(o - 1, 0))}
-          disabled={offset <= 0}
+          onClick={() =>
+            setOffset((o) => Math.max(o - 1, -MAX_DAYS_FORWARD))
+          }
+          disabled={offset <= -MAX_DAYS_FORWARD}
           aria-label="Next day"
         >
           &rsaquo;
         </button>
       </header>
 
-      <Suspense fallback={<MuscleGridSkeleton />}>
+      <Suspense fallback={<GridSkeleton />}>
         <MuscleGrid
           date={currentDate}
-          gridRef={gridRef}
+          containerRef={containerRef}
           onToggle={handleToggle}
+          onToggleRestDay={handleToggleRestDay}
         />
       </Suspense>
     </div>
@@ -104,12 +150,18 @@ export function DayView() {
 
 interface MuscleGridProps {
   date: string;
-  gridRef: React.RefObject<HTMLDivElement | null>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
   onToggle: (group: MuscleGroup) => void;
+  onToggleRestDay: () => void;
 }
 
-function MuscleGrid({ date, gridRef, onToggle }: MuscleGridProps) {
-  const { selected, recentEntries } = use(fetchDayData(date));
+function MuscleGrid({
+  date,
+  containerRef,
+  onToggle,
+  onToggleRestDay,
+}: MuscleGridProps) {
+  const { selected, restDay, recentEntries } = use(fetchDayData(date));
 
   const conflicts = new Map<
     MuscleGroup,
@@ -123,50 +175,63 @@ function MuscleGrid({ date, gridRef, onToggle }: MuscleGridProps) {
   }
 
   return (
-    <div className="muscle-grid" ref={gridRef}>
-      {MUSCLE_GROUPS.map((group) => {
-        const isSelected = selected.includes(group);
-        const conflict = conflicts.get(group);
-        const isConflicted = !!conflict && !isSelected;
+    <div className="grid-container" ref={containerRef}>
+      <div className={`muscle-grid${restDay ? " muscle-grid--rest" : ""}`}>
+        {MUSCLE_GROUPS.map((group) => {
+          const isSelected = selected.includes(group);
+          const conflict = conflicts.get(group);
+          const isConflicted = !!conflict && !isSelected;
 
-        return (
-          <button
-            key={group}
-            className={[
-              "muscle-btn",
-              isSelected && "muscle-btn--selected",
-              isSelected && conflict && "muscle-btn--selected-warn",
-              isConflicted && "muscle-btn--conflicted",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            onClick={() => onToggle(group)}
-          >
-            <span className="muscle-btn__name">
-              {DISPLAY_LABELS[group]}
-            </span>
-            {conflict && (
-              <span className="muscle-btn__badge">
-                {conflict.source === group
-                  ? `${conflict.daysAgo}d ago`
-                  : `${DISPLAY_LABELS[conflict.source]} ${conflict.daysAgo}d`}
+          return (
+            <button
+              key={group}
+              className={[
+                "muscle-btn",
+                isSelected && "muscle-btn--selected",
+                isSelected && conflict && "muscle-btn--selected-warn",
+                isConflicted && "muscle-btn--conflicted",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              onClick={() => onToggle(group)}
+            >
+              <span className="muscle-btn__name">
+                {DISPLAY_LABELS[group]}
               </span>
-            )}
-          </button>
-        );
-      })}
+              {conflict && (
+                <span className="muscle-btn__badge">
+                  {conflict.source === group
+                    ? `${conflict.daysAgo}d ago`
+                    : `${DISPLAY_LABELS[conflict.source]} ${conflict.daysAgo}d`}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      <button
+        className={`rest-day-btn${restDay ? " rest-day-btn--selected" : ""}`}
+        onClick={onToggleRestDay}
+      >
+        Rest Day
+      </button>
     </div>
   );
 }
 
-function MuscleGridSkeleton() {
+function GridSkeleton() {
   return (
-    <div className="muscle-grid">
-      {MUSCLE_GROUPS.map((group) => (
-        <button key={group} className="muscle-btn" disabled>
-          <span className="muscle-btn__name">{DISPLAY_LABELS[group]}</span>
-        </button>
-      ))}
+    <div className="grid-container">
+      <div className="muscle-grid">
+        {MUSCLE_GROUPS.map((group) => (
+          <button key={group} className="muscle-btn" disabled>
+            <span className="muscle-btn__name">{DISPLAY_LABELS[group]}</span>
+          </button>
+        ))}
+      </div>
+      <button className="rest-day-btn" disabled>
+        Rest Day
+      </button>
     </div>
   );
 }

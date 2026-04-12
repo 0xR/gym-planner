@@ -7,11 +7,12 @@ export const MUSCLE_GROUPS = [
   "legs",
   "calves",
   "abs",
+  "traps",
+  "forearms",
 ] as const;
 
 export type MuscleGroup = (typeof MUSCLE_GROUPS)[number];
 
-export interface DayEntry {
-  date: string; // YYYY-MM-DD
-  muscleGroups: MuscleGroup[];
-}
+export type DayEntry =
+  | { date: string; restDay: true }
+  | { date: string; restDay?: false; muscleGroups: MuscleGroup[] };

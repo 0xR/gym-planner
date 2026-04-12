@@ -1,13 +1,10 @@
 import { openDB, type DBSchema } from "idb";
-import type { MuscleGroup } from "./types";
+import type { DayEntry, MuscleGroup } from "./types";
 
 interface GymDB extends DBSchema {
   days: {
     key: string; // YYYY-MM-DD
-    value: {
-      date: string;
-      muscleGroups: MuscleGroup[];
-    };
+    value: DayEntry;
   };
 }
 
@@ -43,7 +40,9 @@ export async function getRecentEntries(fromDate: string, days: number) {
 export async function toggleMuscleGroup(date: string, group: MuscleGroup) {
   const db = await getDB();
   const existing = await db.get("days", date);
-  const groups = existing?.muscleGroups ?? [];
+  const groups = existing?.restDay
+    ? []
+    : [...(existing?.muscleGroups ?? [])];
   const index = groups.indexOf(group);
   if (index >= 0) {
     groups.splice(index, 1);
@@ -56,4 +55,16 @@ export async function toggleMuscleGroup(date: string, group: MuscleGroup) {
     await db.put("days", { date, muscleGroups: groups });
   }
   return groups;
+}
+
+export async function toggleRestDay(date: string) {
+  const db = await getDB();
+  const existing = await db.get("days", date);
+  if (existing?.restDay) {
+    await db.delete("days", date);
+    return false;
+  } else {
+    await db.put("days", { date, restDay: true } as DayEntry);
+    return true;
+  }
 }

@@ -34,13 +34,16 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  min-height: 100dvh;
-  overflow-x: hidden;
 }
 
 #root {
-  min-height: 100dvh;
+  height: 100dvh;
 }

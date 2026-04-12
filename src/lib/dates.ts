@@ -24,6 +24,7 @@ export function dayLabel(dateStr: string): string {
       (1000 * 60 * 60 * 24),
   );
   if (diff === 1) return "Yesterday";
+  if (diff === -1) return "Tomorrow";
   const d = new Date(dateStr + "T00:00:00");
   return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
 }
