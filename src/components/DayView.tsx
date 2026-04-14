@@ -1,5 +1,5 @@
 import { Suspense, use, useRef, useState } from "react";
-import { MUSCLE_GROUPS, type MuscleGroup } from "../lib/types";
+import { MUSCLE_GROUPS, type MuscleGroup, type DayEntry } from "../lib/types";
 import { getConflicts } from "../lib/conflicts";
 import { toggleMuscleGroup, toggleRestDay } from "../lib/db";
 import { today, addDays, dayLabel } from "../lib/dates";
@@ -25,6 +25,39 @@ const DISPLAY_LABELS: Record<MuscleGroup, string> = {
 
 const MAX_DAYS_BACK = 7;
 const MAX_DAYS_FORWARD = 7;
+
+function getLastTrainedMap(
+  entries: DayEntry[],
+  currentDate: string,
+): Partial<Record<MuscleGroup, number>> {
+  const result: Partial<Record<MuscleGroup, number>> = {};
+  const current = new Date(currentDate + "T00:00:00");
+
+  for (const entry of entries) {
+    if (entry.date >= currentDate) continue;
+    if (entry.restDay) continue;
+    const entryDate = new Date(entry.date + "T00:00:00");
+    const daysAgo = Math.round(
+      (current.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
+    if (daysAgo <= 0) continue;
+
+    for (const muscle of entry.muscleGroups) {
+      if (result[muscle] === undefined || daysAgo < result[muscle]!) {
+        result[muscle] = daysAgo;
+      }
+    }
+  }
+
+  return result;
+}
+
+function ageColorClass(daysAgo: number): string {
+  if (daysAgo <= 2) return "muscle-btn__age--recent";
+  if (daysAgo <= 4) return "muscle-btn__age--moderate";
+  if (daysAgo <= 6) return "muscle-btn__age--due";
+  return "muscle-btn__age--overdue";
+}
 
 export function DayView() {
   const [offset, setOffset] = useState(0);
@@ -174,13 +207,28 @@ function MuscleGrid({
     }
   }
 
+  const lastTrainedMap = getLastTrainedMap(recentEntries, date);
+
+  const sortedGroups = [...MUSCLE_GROUPS].sort((a, b) => {
+    const aAge = lastTrainedMap[a];
+    const bAge = lastTrainedMap[b];
+    // Both have ages: longest ago first
+    if (aAge !== undefined && bAge !== undefined) return bAge - aAge;
+    // Never trained = highest priority (treat as infinity)
+    if (aAge !== undefined) return 1;
+    if (bAge !== undefined) return -1;
+    return 0;
+  });
+
   return (
     <div className="grid-container" ref={containerRef}>
       <div className={`muscle-grid${restDay ? " muscle-grid--rest" : ""}`}>
-        {MUSCLE_GROUPS.map((group) => {
+        {sortedGroups.map((group) => {
           const isSelected = selected.includes(group);
           const conflict = conflicts.get(group);
           const isConflicted = !!conflict && !isSelected;
+          const lastTrained = lastTrainedMap[group];
+          const showAgeBadge = !conflict && lastTrained !== undefined;
 
           return (
             <button
@@ -203,6 +251,13 @@ function MuscleGrid({
                   {conflict.source === group
                     ? `${conflict.daysAgo}d ago`
                     : `${DISPLAY_LABELS[conflict.source]} ${conflict.daysAgo}d`}
+                </span>
+              )}
+              {showAgeBadge && (
+                <span
+                  className={`muscle-btn__badge ${ageColorClass(lastTrained)}`}
+                >
+                  {lastTrained}d ago
                 </span>
               )}
             </button>

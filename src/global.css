@@ -12,6 +12,12 @@
   --color-accent-text: oklch(0.15 0.02 70);
   --color-accent-text-dim: oklch(0.30 0.04 70);
 
+  /* Age urgency (text-only, warm gradient: cool → sand → amber → red-orange) */
+  --color-age-recent: oklch(0.50 0.008 250);
+  --color-age-moderate: oklch(0.57 0.05 75);
+  --color-age-due: oklch(0.65 0.11 65);
+  --color-age-overdue: oklch(0.62 0.16 30);
+
   /* Warning/conflict: muted red */
   --color-warn: oklch(0.52 0.14 25);
   --color-warn-text: oklch(0.95 0.03 25);

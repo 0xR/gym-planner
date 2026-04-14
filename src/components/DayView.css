@@ -159,6 +159,23 @@
   transition: color 0.15s;
 }
 
+/* Age urgency (unselected buttons only — selected/conflicted states override) */
+.muscle-btn__age--recent {
+  color: var(--color-age-recent);
+}
+
+.muscle-btn__age--moderate {
+  color: var(--color-age-moderate);
+}
+
+.muscle-btn__age--due {
+  color: var(--color-age-due);
+}
+
+.muscle-btn__age--overdue {
+  color: var(--color-age-overdue);
+}
+
 /* Selected state */
 .muscle-btn--selected {
   background: var(--color-accent);

@@ -17,7 +17,7 @@ function resolvedThenable<T>(value: T): ReactThenable<T> {
   return promise;
 }
 
-const MAX_DAYS_BACK = 7;
+const MAX_DAYS_BACK = 90;
 const cache = new Map<string, ReactThenable<DayData>>();
 
 async function loadDayData(date: string): Promise<DayData> {
