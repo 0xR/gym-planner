@@ -159,6 +159,18 @@
   transition: color 0.15s;
 }
 
+.muscle-btn__badge--conflict {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-warn-muted);
+}
+
+.muscle-btn__conflict-icon {
+  flex-shrink: 0;
+  transform: translateY(-0.5px);
+}
+
 /* Age urgency (unselected buttons only — selected/conflicted states override) */
 .muscle-btn__age--recent {
   color: var(--color-age-recent);

@@ -228,7 +228,9 @@ function MuscleGrid({
           const conflict = conflicts.get(group);
           const isConflicted = !!conflict && !isSelected;
           const lastTrained = lastTrainedMap[group];
-          const showAgeBadge = !conflict && lastTrained !== undefined;
+          const showAgeBadge =
+            lastTrained !== undefined &&
+            (!conflict || conflict.source !== group);
 
           return (
             <button
@@ -246,18 +248,19 @@ function MuscleGrid({
               <span className="muscle-btn__name">
                 {DISPLAY_LABELS[group]}
               </span>
-              {conflict && (
-                <span className="muscle-btn__badge">
-                  {conflict.source === group
-                    ? `${conflict.daysAgo}d ago`
-                    : `${DISPLAY_LABELS[conflict.source]} ${conflict.daysAgo}d`}
-                </span>
-              )}
               {showAgeBadge && (
                 <span
                   className={`muscle-btn__badge ${ageColorClass(lastTrained)}`}
                 >
                   {lastTrained}d ago
+                </span>
+              )}
+              {conflict && (
+                <span className="muscle-btn__badge muscle-btn__badge--conflict">
+                  <WarningIcon className="muscle-btn__conflict-icon" />
+                  {conflict.source === group
+                    ? `${conflict.daysAgo}d ago`
+                    : `${DISPLAY_LABELS[conflict.source]} ${conflict.daysAgo}d`}
                 </span>
               )}
             </button>
@@ -271,6 +274,33 @@ function MuscleGrid({
         Rest Day
       </button>
     </div>
+  );
+}
+
+function WarningIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 12 12"
+      width="10"
+      height="10"
+      aria-hidden="true"
+    >
+      <path
+        d="M6 1.2L11 10.2H1L6 1.2z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6 5v2.4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      <circle cx="6" cy="8.7" r="0.7" fill="currentColor" />
+    </svg>
   );
 }
 
