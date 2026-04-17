@@ -232,8 +232,8 @@
   color: var(--color-warn-muted);
 }
 
-/* Fullscreen PWA: status bar is hidden, reduce top inset */
-@media (display-mode: fullscreen) {
+/* Installed PWA (no browser chrome): reduce top inset */
+@media not all and (display-mode: browser) {
   .day-view {
     padding-top: 0.5rem;
   }
