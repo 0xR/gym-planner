@@ -20,7 +20,7 @@ export default defineConfig({
         description: 'Track muscle groups and plan recovery',
         theme_color: '#1a1a2e',
         background_color: '#1a1a2e',
-        display: 'fullscreen',
+        display: 'standalone',
         orientation: 'portrait',
       },
     }),
