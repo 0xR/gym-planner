@@ -124,8 +124,8 @@ export function DayView() {
               <button className="today-btn" onClick={() => setOffset(0)} aria-label="Go to today">
                 <svg
                   viewBox="0 0 20 20"
-                  width="18"
-                  height="18"
+                  width="20"
+                  height="20"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"

@@ -24,6 +24,11 @@
   --color-warn-text-dim: oklch(0.75 0.06 25);
   --color-warn-border: oklch(0.44 0.12 25);
   --color-warn-muted: oklch(0.62 0.12 25);
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-state: 0.15s;
+  --duration-press: 0.1s;
 }
 
 *,
@@ -53,4 +58,14 @@ body {
 
 #root {
   height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

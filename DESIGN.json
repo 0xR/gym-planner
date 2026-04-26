@@ -1,0 +1,469 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-04-26T11:43:19Z",
+  "title": "Design System: Gym Planner",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "canonical": "oklch(0.13 0.005 250)",
+        "tonalRamp": [
+          "oklch(0.08 0.005 250)",
+          "oklch(0.13 0.005 250)",
+          "oklch(0.20 0.010 250)",
+          "oklch(0.30 0.012 250)",
+          "oklch(0.45 0.012 250)",
+          "oklch(0.60 0.012 250)",
+          "oklch(0.78 0.010 250)",
+          "oklch(0.95 0.005 250)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Tool Steel",
+        "canonical": "oklch(0.25 0.015 250)",
+        "tonalRamp": [
+          "oklch(0.13 0.005 250)",
+          "oklch(0.20 0.012 250)",
+          "oklch(0.25 0.015 250)",
+          "oklch(0.31 0.015 250)",
+          "oklch(0.42 0.018 250)",
+          "oklch(0.56 0.018 250)",
+          "oklch(0.74 0.015 250)",
+          "oklch(0.93 0.010 250)"
+        ]
+      },
+      "surface-hover": {
+        "role": "neutral",
+        "displayName": "Tool Steel Lifted",
+        "canonical": "oklch(0.31 0.015 250)",
+        "tonalRamp": [
+          "oklch(0.16 0.008 250)",
+          "oklch(0.22 0.012 250)",
+          "oklch(0.31 0.015 250)",
+          "oklch(0.40 0.018 250)",
+          "oklch(0.52 0.018 250)",
+          "oklch(0.66 0.015 250)",
+          "oklch(0.81 0.012 250)",
+          "oklch(0.95 0.008 250)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Cold Border",
+        "canonical": "oklch(0.35 0.02 250)",
+        "tonalRamp": [
+          "oklch(0.18 0.010 250)",
+          "oklch(0.27 0.015 250)",
+          "oklch(0.35 0.020 250)",
+          "oklch(0.46 0.022 250)",
+          "oklch(0.58 0.022 250)",
+          "oklch(0.70 0.018 250)",
+          "oklch(0.83 0.015 250)",
+          "oklch(0.95 0.010 250)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Chalk White",
+        "canonical": "oklch(0.93 0.01 250)",
+        "tonalRamp": [
+          "oklch(0.20 0.010 250)",
+          "oklch(0.35 0.012 250)",
+          "oklch(0.50 0.012 250)",
+          "oklch(0.65 0.012 250)",
+          "oklch(0.78 0.012 250)",
+          "oklch(0.86 0.011 250)",
+          "oklch(0.93 0.010 250)",
+          "oklch(0.98 0.008 250)"
+        ]
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Chalk Dim",
+        "canonical": "oklch(0.8 0.01 250)",
+        "tonalRamp": [
+          "oklch(0.18 0.010 250)",
+          "oklch(0.32 0.012 250)",
+          "oklch(0.46 0.012 250)",
+          "oklch(0.60 0.012 250)",
+          "oklch(0.72 0.012 250)",
+          "oklch(0.80 0.010 250)",
+          "oklch(0.90 0.008 250)",
+          "oklch(0.97 0.006 250)"
+        ]
+      },
+      "text-tertiary": {
+        "role": "neutral",
+        "displayName": "Quiet Steel",
+        "canonical": "oklch(0.56 0.01 250)",
+        "tonalRamp": [
+          "oklch(0.18 0.008 250)",
+          "oklch(0.30 0.010 250)",
+          "oklch(0.42 0.010 250)",
+          "oklch(0.56 0.010 250)",
+          "oklch(0.68 0.010 250)",
+          "oklch(0.78 0.008 250)",
+          "oklch(0.88 0.006 250)",
+          "oklch(0.96 0.004 250)"
+        ]
+      },
+      "accent-sand-amber": {
+        "role": "primary",
+        "displayName": "Sand Amber",
+        "canonical": "oklch(0.72 0.12 70)",
+        "tonalRamp": [
+          "oklch(0.20 0.04 70)",
+          "oklch(0.32 0.07 70)",
+          "oklch(0.44 0.10 70)",
+          "oklch(0.56 0.11 70)",
+          "oklch(0.65 0.12 70)",
+          "oklch(0.72 0.12 70)",
+          "oklch(0.83 0.10 70)",
+          "oklch(0.94 0.06 70)"
+        ]
+      },
+      "accent-text": {
+        "role": "on-primary",
+        "displayName": "Sand Ink",
+        "canonical": "oklch(0.15 0.02 70)",
+        "tonalRamp": [
+          "oklch(0.10 0.015 70)",
+          "oklch(0.15 0.020 70)",
+          "oklch(0.25 0.030 70)",
+          "oklch(0.40 0.040 70)",
+          "oklch(0.55 0.050 70)",
+          "oklch(0.70 0.050 70)",
+          "oklch(0.85 0.030 70)",
+          "oklch(0.96 0.015 70)"
+        ]
+      },
+      "accent-text-dim": {
+        "role": "on-primary-muted",
+        "displayName": "Sand Ink Dim",
+        "canonical": "oklch(0.3 0.04 70)",
+        "tonalRamp": [
+          "oklch(0.15 0.02 70)",
+          "oklch(0.22 0.03 70)",
+          "oklch(0.30 0.04 70)",
+          "oklch(0.42 0.05 70)",
+          "oklch(0.55 0.06 70)",
+          "oklch(0.68 0.05 70)",
+          "oklch(0.83 0.03 70)",
+          "oklch(0.96 0.015 70)"
+        ]
+      },
+      "age-recent": {
+        "role": "tertiary-step",
+        "displayName": "Quiet Slate (Recent)",
+        "canonical": "oklch(0.5 0.008 250)",
+        "tonalRamp": [
+          "oklch(0.20 0.006 250)",
+          "oklch(0.32 0.008 250)",
+          "oklch(0.42 0.008 250)",
+          "oklch(0.50 0.008 250)",
+          "oklch(0.60 0.008 250)",
+          "oklch(0.74 0.006 250)",
+          "oklch(0.86 0.005 250)",
+          "oklch(0.96 0.004 250)"
+        ]
+      },
+      "age-moderate": {
+        "role": "tertiary-step",
+        "displayName": "Faded Sand (Moderate)",
+        "canonical": "oklch(0.57 0.05 75)",
+        "tonalRamp": [
+          "oklch(0.22 0.02 75)",
+          "oklch(0.34 0.03 75)",
+          "oklch(0.45 0.04 75)",
+          "oklch(0.57 0.05 75)",
+          "oklch(0.68 0.05 75)",
+          "oklch(0.80 0.04 75)",
+          "oklch(0.90 0.03 75)",
+          "oklch(0.97 0.015 75)"
+        ]
+      },
+      "age-due": {
+        "role": "tertiary-step",
+        "displayName": "Aged Amber (Due)",
+        "canonical": "oklch(0.65 0.11 65)",
+        "tonalRamp": [
+          "oklch(0.22 0.04 65)",
+          "oklch(0.34 0.06 65)",
+          "oklch(0.48 0.09 65)",
+          "oklch(0.58 0.10 65)",
+          "oklch(0.65 0.11 65)",
+          "oklch(0.78 0.10 65)",
+          "oklch(0.90 0.06 65)",
+          "oklch(0.97 0.025 65)"
+        ]
+      },
+      "age-overdue": {
+        "role": "tertiary-step",
+        "displayName": "Embered Rust (Overdue)",
+        "canonical": "oklch(0.62 0.16 30)",
+        "tonalRamp": [
+          "oklch(0.22 0.06 30)",
+          "oklch(0.34 0.10 30)",
+          "oklch(0.48 0.13 30)",
+          "oklch(0.55 0.15 30)",
+          "oklch(0.62 0.16 30)",
+          "oklch(0.74 0.14 30)",
+          "oklch(0.87 0.08 30)",
+          "oklch(0.97 0.03 30)"
+        ]
+      },
+      "warn": {
+        "role": "secondary",
+        "displayName": "Iron Oxide",
+        "canonical": "oklch(0.52 0.14 25)",
+        "tonalRamp": [
+          "oklch(0.22 0.05 25)",
+          "oklch(0.32 0.09 25)",
+          "oklch(0.42 0.12 25)",
+          "oklch(0.52 0.14 25)",
+          "oklch(0.62 0.13 25)",
+          "oklch(0.74 0.10 25)",
+          "oklch(0.86 0.06 25)",
+          "oklch(0.96 0.02 25)"
+        ]
+      },
+      "warn-text": {
+        "role": "on-secondary",
+        "displayName": "Warm Bone",
+        "canonical": "oklch(0.95 0.03 25)",
+        "tonalRamp": [
+          "oklch(0.20 0.015 25)",
+          "oklch(0.32 0.02 25)",
+          "oklch(0.46 0.02 25)",
+          "oklch(0.60 0.02 25)",
+          "oklch(0.74 0.025 25)",
+          "oklch(0.86 0.028 25)",
+          "oklch(0.95 0.030 25)",
+          "oklch(0.98 0.020 25)"
+        ]
+      },
+      "warn-text-dim": {
+        "role": "on-secondary-muted",
+        "displayName": "Warm Bone Dim",
+        "canonical": "oklch(0.75 0.06 25)",
+        "tonalRamp": [
+          "oklch(0.22 0.025 25)",
+          "oklch(0.34 0.04 25)",
+          "oklch(0.48 0.05 25)",
+          "oklch(0.62 0.06 25)",
+          "oklch(0.75 0.06 25)",
+          "oklch(0.85 0.05 25)",
+          "oklch(0.92 0.03 25)",
+          "oklch(0.98 0.015 25)"
+        ]
+      },
+      "warn-border": {
+        "role": "secondary-border",
+        "displayName": "Iron Oxide Border",
+        "canonical": "oklch(0.44 0.12 25)",
+        "tonalRamp": [
+          "oklch(0.20 0.05 25)",
+          "oklch(0.30 0.08 25)",
+          "oklch(0.38 0.10 25)",
+          "oklch(0.44 0.12 25)",
+          "oklch(0.55 0.12 25)",
+          "oklch(0.70 0.10 25)",
+          "oklch(0.85 0.06 25)",
+          "oklch(0.96 0.02 25)"
+        ]
+      },
+      "warn-muted": {
+        "role": "secondary-muted",
+        "displayName": "Iron Oxide Muted",
+        "canonical": "oklch(0.62 0.12 25)",
+        "tonalRamp": [
+          "oklch(0.22 0.04 25)",
+          "oklch(0.34 0.07 25)",
+          "oklch(0.48 0.10 25)",
+          "oklch(0.55 0.11 25)",
+          "oklch(0.62 0.12 25)",
+          "oklch(0.74 0.10 25)",
+          "oklch(0.87 0.06 25)",
+          "oklch(0.97 0.02 25)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "Title",
+        "purpose": "The day name in the header. The largest, only-bold glyph on screen."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Muscle-button labels. Carries the entire grid."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "The 'Nd ago' badge inside each muscle button. Reads as a tag, not prose."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Tabular-nums date subtitle under the day name when off-today."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "state-fade",
+        "value": "0.15s linear",
+        "purpose": "Background, border, and color transitions on every interactive surface."
+      },
+      {
+        "name": "press-scale",
+        "value": "0.1s linear",
+        "purpose": "Active-state transform: muscle buttons scale to 0.97, rest-day pill to 0.98."
+      },
+      {
+        "name": "swipe-glide",
+        "value": "0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The day-to-day translate when the user releases a swipe gesture."
+      }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Muscle Button — Default",
+      "kind": "button",
+      "refersTo": "muscle-btn",
+      "description": "Resting state of a muscle-group toggle. The primary control of the app.",
+      "html": "<button class=\"ds-muscle-btn\"><span class=\"ds-muscle-btn__name\">Chest</span><span class=\"ds-muscle-btn__badge ds-muscle-btn__badge--moderate\">3d ago</span></button>",
+      "css": ".ds-muscle-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; min-height: 92px; padding: 0.5rem; background: oklch(0.25 0.015 250); border: 2px solid oklch(0.35 0.02 250); border-radius: 12px; cursor: pointer; transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s; -webkit-tap-highlight-color: transparent; appearance: none; } .ds-muscle-btn:active { transform: scale(0.97); } .ds-muscle-btn__name { font: 500 1.1rem/1.2 -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; color: oklch(0.8 0.01 250); transition: color 0.15s; } .ds-muscle-btn__badge { font: 500 0.7rem/1 -apple-system, system-ui, sans-serif; letter-spacing: 0.02em; color: oklch(0.56 0.01 250); transition: color 0.15s; } .ds-muscle-btn__badge--recent { color: oklch(0.5 0.008 250); } .ds-muscle-btn__badge--moderate { color: oklch(0.57 0.05 75); } .ds-muscle-btn__badge--due { color: oklch(0.65 0.11 65); } .ds-muscle-btn__badge--overdue { color: oklch(0.62 0.16 30); }"
+    },
+    {
+      "name": "Muscle Button — Selected",
+      "kind": "button",
+      "refersTo": "muscle-btn-selected",
+      "description": "The toggled state. Sand-amber fill, accent-text label upgraded to 600 weight.",
+      "html": "<button class=\"ds-muscle-btn ds-muscle-btn--selected\"><span class=\"ds-muscle-btn__name\">Back</span><span class=\"ds-muscle-btn__badge\">today</span></button>",
+      "css": ".ds-muscle-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; min-height: 92px; padding: 0.5rem; border-radius: 12px; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s; } .ds-muscle-btn:active { transform: scale(0.97); } .ds-muscle-btn--selected { background: oklch(0.72 0.12 70); border: 2px solid oklch(0.72 0.12 70); } .ds-muscle-btn__name { font: 600 1.1rem/1.2 -apple-system, system-ui, sans-serif; color: oklch(0.15 0.02 70); } .ds-muscle-btn__badge { font: 500 0.7rem/1 -apple-system, system-ui, sans-serif; letter-spacing: 0.02em; color: oklch(0.3 0.04 70); }"
+    },
+    {
+      "name": "Muscle Button — Selected + Conflicted",
+      "kind": "button",
+      "refersTo": "muscle-btn-selected-warn",
+      "description": "Loudest state in the system. Fires when the user selects something that conflicts with recent training.",
+      "html": "<button class=\"ds-muscle-btn ds-muscle-btn--selected-warn\"><span class=\"ds-muscle-btn__name\">Triceps</span><span class=\"ds-muscle-btn__badge ds-muscle-btn__badge--conflict\"><svg viewBox=\"0 0 12 12\" width=\"10\" height=\"10\" aria-hidden=\"true\"><path d=\"M6 1.2L11 10.2H1L6 1.2z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><path d=\"M6 5v2.4\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"/><circle cx=\"6\" cy=\"8.7\" r=\"0.7\" fill=\"currentColor\"/></svg>Chest 1d</span></button>",
+      "css": ".ds-muscle-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; min-height: 92px; padding: 0.5rem; border-radius: 12px; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: background-color 0.15s, transform 0.1s; } .ds-muscle-btn:active { transform: scale(0.97); } .ds-muscle-btn--selected-warn { background: oklch(0.52 0.14 25); border: 2px solid oklch(0.52 0.14 25); } .ds-muscle-btn__name { font: 600 1.1rem/1.2 -apple-system, system-ui, sans-serif; color: oklch(0.95 0.03 25); } .ds-muscle-btn__badge { font: 500 0.7rem/1 -apple-system, system-ui, sans-serif; letter-spacing: 0.02em; color: oklch(0.75 0.06 25); display: inline-flex; align-items: center; gap: 0.3rem; } .ds-muscle-btn__badge svg { transform: translateY(-0.5px); }"
+    },
+    {
+      "name": "Muscle Button — Conflicted (not selected)",
+      "kind": "button",
+      "refersTo": "muscle-btn-conflicted",
+      "description": "An advisory state: this muscle group conflicts with recent training. Tappable; the user decides.",
+      "html": "<button class=\"ds-muscle-btn ds-muscle-btn--conflicted\"><span class=\"ds-muscle-btn__name\">Shoulders</span><span class=\"ds-muscle-btn__badge ds-muscle-btn__badge--conflict\"><svg viewBox=\"0 0 12 12\" width=\"10\" height=\"10\" aria-hidden=\"true\"><path d=\"M6 1.2L11 10.2H1L6 1.2z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/><path d=\"M6 5v2.4\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"/><circle cx=\"6\" cy=\"8.7\" r=\"0.7\" fill=\"currentColor\"/></svg>Chest 1d</span></button>",
+      "css": ".ds-muscle-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; min-height: 92px; padding: 0.5rem; background: oklch(0.25 0.015 250); border-radius: 12px; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: background-color 0.15s, transform 0.1s; } .ds-muscle-btn:active { transform: scale(0.97); } .ds-muscle-btn--conflicted { border: 2px solid oklch(0.44 0.12 25); opacity: 0.65; } .ds-muscle-btn__name { font: 500 1.1rem/1.2 -apple-system, system-ui, sans-serif; color: oklch(0.62 0.12 25); } .ds-muscle-btn__badge { font: 500 0.7rem/1 -apple-system, system-ui, sans-serif; letter-spacing: 0.02em; color: oklch(0.62 0.12 25); display: inline-flex; align-items: center; gap: 0.3rem; }"
+    },
+    {
+      "name": "Rest Day Pill — Default",
+      "kind": "button",
+      "refersTo": "rest-day-btn",
+      "description": "Full-width dashed-border pill below the muscle grid. Toggling it dims the grid.",
+      "html": "<button class=\"ds-rest-day-btn\">Rest Day</button>",
+      "css": ".ds-rest-day-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.75rem; background: transparent; border: 2px dashed oklch(0.35 0.02 250); border-radius: 12px; color: oklch(0.56 0.01 250); font: 500 1rem/1 -apple-system, system-ui, sans-serif; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: background-color 0.15s, border-color 0.15s, border-style 0.15s, color 0.15s, transform 0.1s; } .ds-rest-day-btn:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Rest Day Pill — Selected",
+      "kind": "button",
+      "refersTo": "rest-day-btn-selected",
+      "description": "Active rest-day state. Dashed→solid transition is itself a state cue.",
+      "html": "<button class=\"ds-rest-day-btn ds-rest-day-btn--selected\">Rest Day</button>",
+      "css": ".ds-rest-day-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.75rem; border-radius: 12px; font-family: -apple-system, system-ui, sans-serif; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: transform 0.1s; } .ds-rest-day-btn:active { transform: scale(0.98); } .ds-rest-day-btn--selected { background: oklch(0.72 0.12 70); border: 2px solid oklch(0.72 0.12 70); color: oklch(0.15 0.02 70); font-size: 1rem; font-weight: 600; }"
+    },
+    {
+      "name": "Nav Arrow",
+      "kind": "button",
+      "refersTo": "nav-arrow",
+      "description": "Ghost icon button in the day header. Stepwise day navigation; a secondary affordance to the swipe gesture.",
+      "html": "<button class=\"ds-nav-arrow\" aria-label=\"Previous day\">&lsaquo;</button>",
+      "css": ".ds-nav-arrow { background: none; border: none; color: oklch(0.8 0.01 250); font-size: 2rem; line-height: 1; padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: color 0.15s, background-color 0.15s; } .ds-nav-arrow:active { background: oklch(0.31 0.015 250); } .ds-nav-arrow:disabled { opacity: 0.3; pointer-events: none; }"
+    },
+    {
+      "name": "Today Target",
+      "kind": "button",
+      "refersTo": "nav-arrow",
+      "description": "The single sand-amber dot-in-circle that returns the user to today. Appears only when off-today.",
+      "html": "<button class=\"ds-today-btn\" aria-label=\"Go to today\"><svg viewBox=\"0 0 20 20\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><circle cx=\"10\" cy=\"10\" r=\"7\"/><circle cx=\"10\" cy=\"10\" r=\"2.5\" fill=\"currentColor\" stroke=\"none\"/></svg></button>",
+      "css": ".ds-today-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; color: oklch(0.72 0.12 70); padding: 0.35rem; border-radius: 8px; cursor: pointer; appearance: none; -webkit-tap-highlight-color: transparent; transition: background-color 0.15s; } .ds-today-btn:active { background: oklch(0.31 0.015 250); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pocket Tool",
+    "overview": "Gym Planner reads like a well-made hand tool: a single, fixed face of clearly-labelled controls, its state visible in a glance, indifferent to mood. The surface is a cool slate dark — not black — and the only warmth in the system is a sand-amber accent that marks 'this is what you just did.' Conflict is a muted iron-oxide red, never an alarm. Age is a slow gradient from cool grey at 'fresh' to embered rust at 'overdue', letting the user feel time without reading numbers. The system rejects everything that calls attention to itself: no glassmorphism, no gradient text, no streaks, no toasts, no celebratory motion, no green. It also rejects the opposite trap — the all-grey 'neutral' SaaS dashboard. Warmth and rust live in the palette deliberately, because the product's signal IS time-since-trained, and time-since-trained is a temperature, not a number.",
+    "keyCharacteristics": [
+      "Dark, cool slate surface — never #000, never warm-grey beige.",
+      "One warm accent (sand-amber). Used on ≤1 muscle button per row in the common case.",
+      "Conflict and age share a warm hue family (rust → amber → red-orange) so the user reads 'warmth = attention.'",
+      "Flat. No shadows, no elevation tokens, no card-in-card. Depth is conveyed by surface-vs-bg lightness alone.",
+      "Stable layout: state changes are color, weight, opacity. Never position, size, or order at runtime.",
+      "One typeface: the system stack. Numerals are tabular where they appear."
+    ],
+    "rules": [
+      {
+        "name": "The One-Voice Rule",
+        "body": "Sand Amber is the only fully-saturated color in the resting state of the app. If two muscle groups are selected, two Sand Amber buttons appear; that is the maximum saturation the screen ever carries. Iron Oxide only appears as a consequence of selection (you selected a conflict). Never decorative.",
+        "section": "colors"
+      },
+      {
+        "name": "The Temperature-as-Time Rule",
+        "body": "Warmth in the palette always means 'older / due / urgent.' Cool means 'recent / fresh.' Do not introduce a cool warning color or a warm 'fresh' color — the user reads the gradient as a thermometer.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Green Rule",
+        "body": "Green is forbidden in this app. It is the single most common fitness-app cliché and the surest tell of 'generic black + neon green tracker.' Success states are not signaled by hue; they are signaled by the warm accent fill of the action that just succeeded.",
+        "section": "colors"
+      },
+      {
+        "name": "The One-Family Rule",
+        "body": "No second typeface. No serif accent, no monospace block, no display face. The system stack carries every role; differentiation comes from weight (400/500/600) and size (0.7→1.25rem) only.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Prose Rule",
+        "body": "This app has no paragraph copy, no marketing line, no help text, no microcopy beyond labels. If a future feature wants paragraph type, the answer is to remove the feature, not add a body style.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. The only visual feedback for press is a 0.97 transform scale (muscle buttons) or a 0.98 transform scale (rest day) lasting 0.1s — never a shadow expansion, never a glow, never a halo.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No-Glassmorphism Rule",
+        "body": "No backdrop-filter: blur(...). No translucent panels over busy backgrounds. Surfaces are opaque. The dimmed-surface effect on a rest day's grid (opacity 0.6) is the only translucency in the system, and it is applied to ink, not to glass.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the muscle-button grid in fixed positions. State changes color, weight, opacity — never position, size, or order at runtime.",
+      "Do use Sand Amber (oklch(0.72 0.12 70)) and only Sand Amber as the 'selected' fill. Never substitute another hue; never tint it darker for variety.",
+      "Do signal conflict through three reinforcing channels: hue (iron-oxide), opacity (0.65 on the un-selected conflicted state), and the inline warning-triangle icon. Never hue alone.",
+      "Do use the OKLCH values in global.css as the source of truth. The frontmatter in DESIGN.md mirrors them; if you tweak a shade, tweak it there and re-extract.",
+      "Do keep transitions to color/opacity/transform at 0.15s (state) or 0.1s (press). Use cubic-bezier(0.22, 1, 0.36, 1) for the day-swipe translate.",
+      "Do use tabular-nums for the date subtitle and the 'Nd ago' badge. Number alignment is the point.",
+      "Do preserve the dashed border on the Rest Day pill in its un-selected state. The dashed→solid transition on selection is a deliberate state cue."
+    ],
+    "donts": [
+      "Don't introduce green anywhere. Not for 'success,' not for a 'training streak,' not for a chart line. The No-Green Rule is absolute — green is the cliché this product is defined against.",
+      "Don't use #000 for the background. The bg is oklch(0.13 0.005 250), slightly cool, never pure black.",
+      "Don't add gradient text (background-clip: text) to the day name, the accent number, or anything else. Solid color or no.",
+      "Don't add glassmorphism. No backdrop-filter: blur(...), no translucent cards over busy backgrounds.",
+      "Don't nest cards. There are no cards to begin with; do not introduce a card to wrap the grid, then a card to wrap each button, then a chip inside the button.",
+      "Don't use a side-stripe border (left or right border > 1px in a colored hue). Conflicts are full-border, fills, or icon-tinted, never a stripe down the side.",
+      "Don't add a streak counter, XP, badge, or 'great job!' toast. The product is not a coach.",
+      "Don't add a confirmation dialog or save button to the toggle action. The toggle IS the save.",
+      "Don't introduce a second typeface. The system stack carries every role.",
+      "Don't add a shadow, glow, or halo on press. The 0.97 transform scale is the entire press feedback.",
+      "Don't disable a muscle button to 'protect' the user from a conflict. Conflicts are advisory; the button stays tappable. Disabling breaks the Stable Layout principle.",
+      "Don't add motion that is not state-coupled. No idle pulses, no shimmer, no scroll-driven choreography. The day-swipe translate is the only non-state animation in the system."
+    ]
+  }
+}
