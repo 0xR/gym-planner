@@ -1,0 +1,21 @@
+dist
+dist-ssr
+node_modules
+coverage
+.tanstack
+.husky/_
+src/routeTree.gen.ts
+package-lock.json
+
+# Sandbox-mounted system dotfiles (not project files)
+.bash_profile
+.bashrc
+.gitconfig
+.gitmodules
+.mcp.json
+.profile
+.ripgreprc
+.vscode
+.zprofile
+.zshrc
+.claude
