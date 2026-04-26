@@ -1,4 +1,4 @@
-import { Suspense, use, useRef, useState } from "react";
+import { Suspense, use, useEffect, useRef, useState } from "react";
 import { MUSCLE_GROUPS, type MuscleGroup, type DayEntry } from "../lib/types";
 import { getConflicts } from "../lib/conflicts";
 import { toggleMuscleGroup, toggleRestDay } from "../lib/db";
@@ -56,9 +56,16 @@ function ageColorClass(daysAgo: number): string {
 export function DayView() {
   const [offset, setOffset] = useState(0);
   const [, setVersion] = useState(0);
+  const [showBuildInfo, setShowBuildInfo] = useState(false);
   const touchStartX = useRef(0);
   const touchDeltaX = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showBuildInfo) return;
+    const id = window.setTimeout(() => setShowBuildInfo(false), 3000);
+    return () => window.clearTimeout(id);
+  }, [showBuildInfo]);
 
   const currentDate = addDays(today(), -offset);
 
@@ -119,8 +126,14 @@ export function DayView() {
         </button>
         <div className="day-label">
           <div className="day-name-row">
-            <span className="day-name">{dayLabel(currentDate)}</span>
-            {offset !== 0 && (
+            <button
+              className={`day-name${showBuildInfo ? " day-name--build-info" : ""}`}
+              onClick={() => setShowBuildInfo((s) => !s)}
+              aria-label={showBuildInfo ? "Hide build info" : "Show build info"}
+            >
+              {showBuildInfo ? `${__BUILD_COMMIT__} · ${__BUILD_DATE__}` : dayLabel(currentDate)}
+            </button>
+            {offset !== 0 && !showBuildInfo && (
               <button className="today-btn" onClick={() => setOffset(0)} aria-label="Go to today">
                 <svg
                   viewBox="0 0 20 20"
