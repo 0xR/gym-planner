@@ -1,15 +1,15 @@
 import type { MuscleGroup, DayEntry } from "./types";
 
-// Strong conflicts: 2 day rest needed (same as training the same group)
-// Weak conflicts: 1 day rest needed
-type ConflictWeight = 1 | 2;
+const BIG_MUSCLES = new Set<MuscleGroup>(["back", "chest", "shoulders", "legs"]);
 
-const CONFLICT_PAIRS: [MuscleGroup, MuscleGroup, ConflictWeight][] = [
-  ["chest", "shoulders", 2],
-  ["chest", "triceps", 1],
-  ["back", "biceps", 1],
-  ["shoulders", "triceps", 1],
-  ["shoulders", "traps", 1],
+// Pairs of muscles that conflict due to anatomical overlap (compound lifts hit secondaries).
+// Same-group conflicts are handled separately.
+const CONFLICT_PAIRS: [MuscleGroup, MuscleGroup][] = [
+  ["chest", "shoulders"],
+  ["chest", "triceps"],
+  ["back", "biceps"],
+  ["shoulders", "triceps"],
+  ["shoulders", "traps"],
 ];
 
 interface ConflictInfo {
@@ -18,14 +18,14 @@ interface ConflictInfo {
   restDays: number;
 }
 
+function pairsConflict(a: MuscleGroup, b: MuscleGroup): boolean {
+  if (a === b) return true;
+  return CONFLICT_PAIRS.some(([m1, m2]) => (a === m1 && b === m2) || (a === m2 && b === m1));
+}
+
 function getRestDays(a: MuscleGroup, b: MuscleGroup): number {
-  if (a === b) return 2;
-  for (const [m1, m2, weight] of CONFLICT_PAIRS) {
-    if ((a === m1 && b === m2) || (a === m2 && b === m1)) {
-      return weight;
-    }
-  }
-  return 0;
+  if (!pairsConflict(a, b)) return 0;
+  return BIG_MUSCLES.has(a) && BIG_MUSCLES.has(b) ? 2 : 1;
 }
 
 export function getConflicts(
