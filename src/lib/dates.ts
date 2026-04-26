@@ -19,8 +19,7 @@ export function dayLabel(dateStr: string): string {
   const t = today();
   if (dateStr === t) return "Today";
   const diff = Math.round(
-    (new Date(t + "T00:00:00").getTime() -
-      new Date(dateStr + "T00:00:00").getTime()) /
+    (new Date(t + "T00:00:00").getTime() - new Date(dateStr + "T00:00:00").getTime()) /
       (1000 * 60 * 60 * 24),
   );
   if (diff === 1) return "Yesterday";

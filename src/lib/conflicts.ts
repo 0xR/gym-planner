@@ -40,9 +40,7 @@ export function getConflicts(
     if (entry.date === currentDate) continue;
     if (entry.restDay) continue;
     const entryDate = new Date(entry.date + "T00:00:00");
-    const daysAgo = Math.round(
-      (today.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24),
-    );
+    const daysAgo = Math.round((today.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24));
     if (daysAgo <= 0 || daysAgo > 2) continue;
 
     for (const trained of entry.muscleGroups) {

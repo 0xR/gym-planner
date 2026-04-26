@@ -30,9 +30,7 @@ export async function getRecentEntries(fromDate: string, days: number) {
   const from = new Date(fromDate + "T00:00:00");
   return all.filter((entry) => {
     const d = new Date(entry.date + "T00:00:00");
-    const diff = Math.round(
-      (from.getTime() - d.getTime()) / (1000 * 60 * 60 * 24),
-    );
+    const diff = Math.round((from.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
     return diff >= 0 && diff <= days;
   });
 }
@@ -40,9 +38,7 @@ export async function getRecentEntries(fromDate: string, days: number) {
 export async function toggleMuscleGroup(date: string, group: MuscleGroup) {
   const db = await getDB();
   const existing = await db.get("days", date);
-  const groups = existing?.restDay
-    ? []
-    : [...(existing?.muscleGroups ?? [])];
+  const groups = existing?.restDay ? [] : [...(existing?.muscleGroups ?? [])];
   const index = groups.indexOf(group);
   if (index >= 0) {
     groups.splice(index, 1);

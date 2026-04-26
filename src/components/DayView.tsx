@@ -3,11 +3,7 @@ import { MUSCLE_GROUPS, type MuscleGroup, type DayEntry } from "../lib/types";
 import { getConflicts } from "../lib/conflicts";
 import { toggleMuscleGroup, toggleRestDay } from "../lib/db";
 import { today, addDays, dayLabel } from "../lib/dates";
-import {
-  fetchDayData,
-  optimisticToggle,
-  optimisticToggleRestDay,
-} from "../lib/dayData";
+import { fetchDayData, optimisticToggle, optimisticToggleRestDay } from "../lib/dayData";
 import "./DayView.css";
 
 const DISPLAY_LABELS: Record<MuscleGroup, string> = {
@@ -37,9 +33,7 @@ function getLastTrainedMap(
     if (entry.date >= currentDate) continue;
     if (entry.restDay) continue;
     const entryDate = new Date(entry.date + "T00:00:00");
-    const daysAgo = Math.round(
-      (current.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24),
-    );
+    const daysAgo = Math.round((current.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24));
     if (daysAgo <= 0) continue;
 
     for (const muscle of entry.muscleGroups) {
@@ -102,10 +96,7 @@ export function DayView() {
     const threshold = 60;
     if (touchDeltaX.current > threshold && offset < MAX_DAYS_BACK) {
       setOffset((o) => o + 1);
-    } else if (
-      touchDeltaX.current < -threshold &&
-      offset > -MAX_DAYS_FORWARD
-    ) {
+    } else if (touchDeltaX.current < -threshold && offset > -MAX_DAYS_FORWARD) {
       setOffset((o) => o - 1);
     }
   };
@@ -130,11 +121,7 @@ export function DayView() {
           <div className="day-name-row">
             <span className="day-name">{dayLabel(currentDate)}</span>
             {offset !== 0 && (
-              <button
-                className="today-btn"
-                onClick={() => setOffset(0)}
-                aria-label="Go to today"
-              >
+              <button className="today-btn" onClick={() => setOffset(0)} aria-label="Go to today">
                 <svg
                   viewBox="0 0 20 20"
                   width="18"
@@ -144,13 +131,7 @@ export function DayView() {
                   strokeWidth="1.5"
                 >
                   <circle cx="10" cy="10" r="7" />
-                  <circle
-                    cx="10"
-                    cy="10"
-                    r="2.5"
-                    fill="currentColor"
-                    stroke="none"
-                  />
+                  <circle cx="10" cy="10" r="2.5" fill="currentColor" stroke="none" />
                 </svg>
               </button>
             )}
@@ -159,9 +140,7 @@ export function DayView() {
         </div>
         <button
           className="nav-arrow"
-          onClick={() =>
-            setOffset((o) => Math.max(o - 1, -MAX_DAYS_FORWARD))
-          }
+          onClick={() => setOffset((o) => Math.max(o - 1, -MAX_DAYS_FORWARD))}
           disabled={offset <= -MAX_DAYS_FORWARD}
           aria-label="Next day"
         >
@@ -188,18 +167,10 @@ interface MuscleGridProps {
   onToggleRestDay: () => void;
 }
 
-function MuscleGrid({
-  date,
-  containerRef,
-  onToggle,
-  onToggleRestDay,
-}: MuscleGridProps) {
+function MuscleGrid({ date, containerRef, onToggle, onToggleRestDay }: MuscleGridProps) {
   const { selected, restDay, recentEntries } = use(fetchDayData(date));
 
-  const conflicts = new Map<
-    MuscleGroup,
-    { source: MuscleGroup; daysAgo: number }
-  >();
+  const conflicts = new Map<MuscleGroup, { source: MuscleGroup; daysAgo: number }>();
   for (const group of MUSCLE_GROUPS) {
     const conflict = getConflicts(group, recentEntries, date);
     if (conflict) {
@@ -229,8 +200,7 @@ function MuscleGrid({
           const isConflicted = !!conflict && !isSelected;
           const lastTrained = lastTrainedMap[group];
           const showAgeBadge =
-            lastTrained !== undefined &&
-            (!conflict || conflict.source !== group);
+            lastTrained !== undefined && (!conflict || conflict.source !== group);
 
           return (
             <button
@@ -245,13 +215,9 @@ function MuscleGrid({
                 .join(" ")}
               onClick={() => onToggle(group)}
             >
-              <span className="muscle-btn__name">
-                {DISPLAY_LABELS[group]}
-              </span>
+              <span className="muscle-btn__name">{DISPLAY_LABELS[group]}</span>
               {showAgeBadge && (
-                <span
-                  className={`muscle-btn__badge ${ageColorClass(lastTrained)}`}
-                >
+                <span className={`muscle-btn__badge ${ageColorClass(lastTrained)}`}>
                   {lastTrained}d ago
                 </span>
               )}
@@ -279,13 +245,7 @@ function MuscleGrid({
 
 function WarningIcon({ className }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 12 12"
-      width="10"
-      height="10"
-      aria-hidden="true"
-    >
+    <svg className={className} viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
       <path
         d="M6 1.2L11 10.2H1L6 1.2z"
         fill="none"
@@ -293,12 +253,7 @@ function WarningIcon({ className }: { className?: string }) {
         strokeWidth="1.4"
         strokeLinejoin="round"
       />
-      <path
-        d="M6 5v2.4"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
+      <path d="M6 5v2.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
       <circle cx="6" cy="8.7" r="0.7" fill="currentColor" />
     </svg>
   );

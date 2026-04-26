@@ -76,10 +76,7 @@ export function optimisticToggleRestDay(date: string): void {
     recentEntries.push({ date, restDay: true } as DayEntry);
   }
 
-  cache.set(
-    date,
-    resolvedThenable({ selected: [], restDay, recentEntries }),
-  );
+  cache.set(date, resolvedThenable({ selected: [], restDay, recentEntries }));
 
   for (const key of cache.keys()) {
     if (key !== date) cache.delete(key);
