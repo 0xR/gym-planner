@@ -226,6 +226,25 @@ There are no inputs in the system. The product has no text entry, no form, no se
 
 The header is a 3-cell flex row: previous-day arrow, day-label group (day name + optional today-target dot + optional date subtitle), next-day arrow. Day-to-day movement is primarily by horizontal swipe on the grid container; the arrows are a secondary affordance for users who can't or won't swipe. The "today" affordance is a single round-dot icon that appears next to the day name only when the user is not on today.
 
+A vertical swipe down on the DayView grid navigates to the **Calendar** surface (described below). A vertical swipe down on the Calendar background (any region not occupied by a day-cell) returns to DayView at today. These are the only two gestures that cross between surfaces; no menu, no tab bar, no header link.
+
+### Calendar
+
+The single second surface. Reached only by swipe-down from DayView; exists solely to audit training volume across days. Vertically scrolling list of month sections, newest at the top, scroll terminates at the first month that contains any logged entry.
+
+- **Month section header:** `Month YYYY · N trained · N rest · N —` on a single line. Month name in Title style (`Chalk White`, 1.25rem, 600). The three counts in Meta style (`Quiet Steel`, 0.8rem, 400, tabular-nums), separated by middle-dot interpuncts. Counts exclude future days of the current month and exclude leading/trailing padding.
+- **Day-of-week row:** Single line, `M T W T F S S`, in Label style (`Quiet Steel`, 0.7rem, letter-spacing 0.02em). Repeated inside every month section — each month is a self-contained sheet.
+- **Cell grid:** 7-column grid spanning the viewport width with leading blank cells until day 1. Cells are square (aspect-ratio: 1) buttons with no border by default. Vertical and horizontal gap 0.25rem.
+- **Cell vocabulary** (one glyph per cell, in Body style, `Chalk Dim`, tabular-nums):
+  - **Trained:** the integer count of muscle groups (1–6) in `Chalk White` at 600 weight.
+  - **Rest:** the single letter `R` in `Quiet Steel` at 500 weight.
+  - **Past untouched:** middle-dot `·` in `Quiet Steel` at 500 weight.
+  - **Future days of current month:** completely blank (no glyph, no border).
+  - **Padding (cells before day 1):** completely blank.
+- **Today indicator:** a 2px solid `Sand Amber` border around today's cell. No fill change, no glyph change, no scale. The ring is the entire indicator.
+- **Tap target:** every non-padding non-future cell is a button. Tap → calendar dismisses, DayView opens at that date (the `date` URL search param drives DayView's initial offset).
+- **Dismiss:** swipe-down on the calendar background (the gap surface between/around cells, including the area above the first month header) → back to DayView at today. No other dismiss affordance.
+
 ### Signature Component — The Age Badge
 
 Each muscle button carries a small "Nd ago" label tinted by the age gradient (Quiet Slate → Faded Sand → Aged Amber → Embered Rust). The same slot, when the muscle group is in conflict with recent training, is replaced by a warning-icon + ago-or-source-label pair in iron-oxide hues. The badge is the system's single most information-dense glyph and its only piece of color-coded data.

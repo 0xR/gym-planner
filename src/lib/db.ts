@@ -35,6 +35,11 @@ export async function getRecentEntries(fromDate: string, days: number) {
   });
 }
 
+export async function getAllEntries(): Promise<DayEntry[]> {
+  const db = await getDB();
+  return db.getAll("days");
+}
+
 export async function toggleMuscleGroup(date: string, group: MuscleGroup) {
   const db = await getDB();
   const existing = await db.get("days", date);

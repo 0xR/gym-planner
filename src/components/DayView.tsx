@@ -1,4 +1,5 @@
 import { Suspense, use, useEffect, useRef, useState } from "react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { MUSCLE_GROUPS, type MuscleGroup, type DayEntry } from "../lib/types";
 import { getConflicts } from "../lib/conflicts";
 import { toggleMuscleGroup, toggleRestDay } from "../lib/db";
@@ -19,8 +20,8 @@ const DISPLAY_LABELS: Record<MuscleGroup, string> = {
   forearms: "Forearms",
 };
 
-const MAX_DAYS_BACK = 7;
 const MAX_DAYS_FORWARD = 7;
+const VERTICAL_SWIPE_THRESHOLD = 80;
 
 function getLastTrainedMap(
   entries: DayEntry[],
@@ -54,11 +55,16 @@ function ageColorClass(daysAgo: number): string {
 }
 
 export function DayView() {
-  const [offset, setOffset] = useState(0);
+  const navigate = useNavigate();
+  const search = useSearch({ strict: false }) as { date?: string };
+  const [currentDate, setCurrentDate] = useState(() => search.date ?? today());
   const [, setVersion] = useState(0);
   const [showBuildInfo, setShowBuildInfo] = useState(false);
   const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
   const touchDeltaX = useRef(0);
+  const touchDeltaY = useRef(0);
+  const gestureAxis = useRef<"horizontal" | "vertical" | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,7 +73,13 @@ export function DayView() {
     return () => window.clearTimeout(id);
   }, [showBuildInfo]);
 
-  const currentDate = addDays(today(), -offset);
+  const todayDate = today();
+  const forwardOffsetFromToday = Math.round(
+    (new Date(currentDate + "T00:00:00").getTime() - new Date(todayDate + "T00:00:00").getTime()) /
+      (1000 * 60 * 60 * 24),
+  );
+  const canGoForward = forwardOffsetFromToday < MAX_DAYS_FORWARD;
+  const isToday = currentDate === todayDate;
 
   const handleToggle = (group: MuscleGroup) => {
     optimisticToggle(currentDate, group);
@@ -83,12 +95,23 @@ export function DayView() {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
     touchDeltaX.current = 0;
+    touchDeltaY.current = 0;
+    gestureAxis.current = null;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
-    if (containerRef.current) {
+    touchDeltaY.current = e.touches[0].clientY - touchStartY.current;
+    if (gestureAxis.current === null) {
+      const absX = Math.abs(touchDeltaX.current);
+      const absY = Math.abs(touchDeltaY.current);
+      if (absX > 8 || absY > 8) {
+        gestureAxis.current = absX > absY ? "horizontal" : "vertical";
+      }
+    }
+    if (gestureAxis.current === "horizontal" && containerRef.current) {
       const clamped = Math.max(-80, Math.min(80, touchDeltaX.current));
       containerRef.current.style.transform = `translateX(${clamped}px)`;
       containerRef.current.style.transition = "none";
@@ -100,12 +123,19 @@ export function DayView() {
       containerRef.current.style.transform = "";
       containerRef.current.style.transition = "";
     }
-    const threshold = 60;
-    if (touchDeltaX.current > threshold && offset < MAX_DAYS_BACK) {
-      setOffset((o) => o + 1);
-    } else if (touchDeltaX.current < -threshold && offset > -MAX_DAYS_FORWARD) {
-      setOffset((o) => o - 1);
+    const horizontalThreshold = 60;
+    if (gestureAxis.current === "horizontal") {
+      if (touchDeltaX.current > horizontalThreshold) {
+        setCurrentDate((d) => addDays(d, -1));
+      } else if (touchDeltaX.current < -horizontalThreshold && canGoForward) {
+        setCurrentDate((d) => addDays(d, 1));
+      }
+    } else if (gestureAxis.current === "vertical") {
+      if (touchDeltaY.current > VERTICAL_SWIPE_THRESHOLD) {
+        navigate({ to: "/calendar" });
+      }
     }
+    gestureAxis.current = null;
   };
 
   return (
@@ -118,8 +148,7 @@ export function DayView() {
       <header className="day-header">
         <button
           className="nav-arrow"
-          onClick={() => setOffset((o) => Math.min(o + 1, MAX_DAYS_BACK))}
-          disabled={offset >= MAX_DAYS_BACK}
+          onClick={() => setCurrentDate((d) => addDays(d, -1))}
           aria-label="Previous day"
         >
           &lsaquo;
@@ -133,8 +162,12 @@ export function DayView() {
             >
               {showBuildInfo ? `${__BUILD_COMMIT__} · ${__BUILD_DATE__}` : dayLabel(currentDate)}
             </button>
-            {offset !== 0 && !showBuildInfo && (
-              <button className="today-btn" onClick={() => setOffset(0)} aria-label="Go to today">
+            {!isToday && !showBuildInfo && (
+              <button
+                className="today-btn"
+                onClick={() => setCurrentDate(todayDate)}
+                aria-label="Go to today"
+              >
                 <svg
                   viewBox="0 0 20 20"
                   width="20"
@@ -149,12 +182,12 @@ export function DayView() {
               </button>
             )}
           </div>
-          {offset !== 0 && <span className="day-date">{currentDate}</span>}
+          {!isToday && <span className="day-date">{currentDate}</span>}
         </div>
         <button
           className="nav-arrow"
-          onClick={() => setOffset((o) => Math.max(o - 1, -MAX_DAYS_FORWARD))}
-          disabled={offset <= -MAX_DAYS_FORWARD}
+          onClick={() => canGoForward && setCurrentDate((d) => addDays(d, 1))}
+          disabled={!canGoForward}
           aria-label="Next day"
         >
           &rsaquo;

@@ -1,4 +1,4 @@
-import { getDayEntry, getRecentEntries } from "./db";
+import { getAllEntries, getDayEntry, getRecentEntries } from "./db";
 import type { DayEntry, MuscleGroup } from "./types";
 
 export interface DayData {
@@ -19,6 +19,24 @@ function resolvedThenable<T>(value: T): ReactThenable<T> {
 
 const MAX_DAYS_BACK = 90;
 const cache = new Map<string, ReactThenable<DayData>>();
+let calendarCache: ReactThenable<DayEntry[]> | null = null;
+
+export function fetchCalendarData(): Promise<DayEntry[]> {
+  if (!calendarCache) {
+    const promise = getAllEntries() as ReactThenable<DayEntry[]>;
+    promise.then(
+      (value) => {
+        promise.status = "fulfilled";
+        promise.value = value;
+      },
+      () => {
+        promise.status = "rejected";
+      },
+    );
+    calendarCache = promise;
+  }
+  return calendarCache;
+}
 
 async function loadDayData(date: string): Promise<DayData> {
   const [dayEntry, recentEntries] = await Promise.all([
@@ -62,6 +80,7 @@ export function optimisticToggle(date: string, group: MuscleGroup): void {
   for (const key of cache.keys()) {
     if (key !== date) cache.delete(key);
   }
+  calendarCache = null;
 }
 
 export function optimisticToggleRestDay(date: string): void {
@@ -81,8 +100,10 @@ export function optimisticToggleRestDay(date: string): void {
   for (const key of cache.keys()) {
     if (key !== date) cache.delete(key);
   }
+  calendarCache = null;
 }
 
 export function invalidateAll() {
   cache.clear();
+  calendarCache = null;
 }
